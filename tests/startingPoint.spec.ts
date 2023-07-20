@@ -13,12 +13,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Fill in the form', async ({ page }) => {
-  const confirmationPage = new ConfirmationPage(page);
-  const user = new User();
-
   const formPage = new FormPage(page);
+  const user = new User();
   await formPage.fillAndSubmitForm(user);
 
+  const confirmationPage = new ConfirmationPage(page);
   const resultJson = await confirmationPage.getValues(page);
   // https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
   expect(user.dateOfBirth.toLocaleDateString('en-gb', { day: '2-digit', month: 'long', year: 'numeric' })).toEqual(
