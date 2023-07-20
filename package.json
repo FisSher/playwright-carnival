@@ -1,0 +1,25 @@
+{
+  "name": "palomaframework",
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.35.1",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0-alpha.1",
+    "prettier": "3.0.0"
+  },
+  "dependencies": {
+    "@cliqz/adblocker-playwright": "^1.26.6",
+    "@faker-js/faker": "^8.0.2",
+    "cross-fetch": "^4.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}
