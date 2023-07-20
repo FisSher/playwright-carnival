@@ -1,86 +1,73 @@
-import { Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { User } from '../Models/User';
+import { BasePage } from './BasePage';
+import { FormLocators } from './FormLocators';
 
-export class FormPage {
-  //properties
-  page: Page;
-  fname: Locator;
-  lname: Locator;
-  email: Locator;
-  gender: string;
-  mobile: Locator;
-  dateofbirth: Locator;
-  monthselector: Locator;
-  yearselector: Locator;
-  subjects: Locator;
-  currentaddress: Locator;
-  state: Locator;
-  city: Locator;
+export class FormPage extends BasePage {
+  formLocators: FormLocators;
 
   constructor(page: Page) {
-    this.page = page;
-    this.fname = page.locator('input[id="firstName"]');
-    this.lname = page.locator('input[id="lastName"]');
-    this.email = page.locator('input[id="userEmail"]');
-    this.gender = 'input[name="gender"][value="replaceMe"]';
-    this.mobile = page.locator('input[id="userNumber"]');
-    this.dateofbirth = page.locator('input[id="dateOfBirthInput"]');
-    this.subjects = page.locator('div[class="subjects-auto-complete__input"]');
-    this.currentaddress = page.locator('textarea[id="currentAddress"]');
-    this.state = page.locator('div[id="state"] input');
-    this.city = page.locator('input[id="userEmail"]');
+    super(page);
+    this.formLocators = new FormLocators(page);
   }
 
   async goToFormPage() {
     await this.page.goto('https://demoqa.com/automation-practice-form');
   }
 
-  async fillForm(user: User) {
-    await this.fname.fill(user.name);
-    await this.lname.fill(user.lastName);
-    await this.email.fill(user.email);
+  async fillAndSubmitForm(user: User) {
+    await this.fillBasicData(user);
+    await this.fillBirthDay(user.dateOfBirth);
     await this.selectGender(user.gender);
-    await this.mobile.fill(user.mobile);
-    await this.currentaddress.fill(user.address.currentAddress);
     await this.fillSubjects(user.subjects);
     await this.selectHobby(user.hobbies);
+    await this.selectStateAndCity(user.address.state, user.address.city);
+    await this.formLocators.submitButton.click();
   }
 
-  async selectGender(gender: string) {
-    const selector = this.gender.replace('replaceMe', gender);
+  private async fillBasicData(user: User) {
+    await this.formLocators.firstNameInput.fill(user.name);
+    await this.formLocators.lastNameInput.fill(user.lastName);
+    await this.formLocators.emailInput.fill(user.email);
+    await this.formLocators.mobileInput.fill(user.mobile);
+    await this.formLocators.currentAddressInput.fill(user.address.currentAddress);
+  }
+
+  private async selectGender(gender: string) {
+    const selector = this.formLocators.genderCheckbox.replace('replaceMe', gender);
     await this.page.locator(selector).setChecked(true, { force: true });
   }
 
-  async fillBirthDay(birthday: Date) {
+  private async fillBirthDay(birthday: Date) {
     // https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
-    const parsedDate = birthday.toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' });
-    await this.dateofbirth.fill(parsedDate);
+    const parsedDate = birthday.toLocaleDateString('en-gb', { day: '2-digit', month: 'short', year: 'numeric' });
+    await this.formLocators.dateOfBirthInput.fill(parsedDate);
     await this.page.locator('label[id="dateOfBirth-label"]').click();
   }
 
-  async fillSubjects(subjects: string[]) {
+  private async fillSubjects(subjects: string[]) {
     for (const subject of subjects) {
-      await this.subjects.click();
+      await this.formLocators.subjectsCheckbox.click();
       await this.page.keyboard.type(subject.trim());
       const subjectsDropdown = this.page.locator('div[id="react-select-2-option-0"]');
       await subjectsDropdown.click();
     }
   }
 
-  getHobbySelector(hobby: string): string {
+  private getHobbySelector(hobby: string): string {
     switch (hobby) {
       case 'Sports':
-        return 'input[id="hobbies-checkbox-1"]';
+        return this.formLocators.sportsSelector;
       case 'Reading':
-        return 'input[id="hobbies-checkbox-2"]';
+        return this.formLocators.readingSelector;
       case 'Music':
-        return 'input[id="hobbies-checkbox-3"]';
+        return this.formLocators.musicSelector;
       default:
         return '';
     }
   }
 
-  async selectHobby(hobbies: string[]) {
+  private async selectHobby(hobbies: string[]) {
     let mySelector = '';
     for (const hobby of hobbies) {
       mySelector = this.getHobbySelector(hobby);
@@ -88,14 +75,10 @@ export class FormPage {
     }
   }
 
-  async selectStateAndCity(state: string, city: string) {
-    await this.page.locator('div[id="state"]').click();
+  private async selectStateAndCity(state: string, city: string) {
+    await this.formLocators.stateDropdown.click();
     await this.page.locator(`text="${state}"`).click();
-    await this.page.locator('div[id="city"]').click();
+    await this.formLocators.cityDropdown.click();
     await this.page.locator(`text="${city}"`).click();
-  }
-
-  async submitButton() {
-    await this.page.locator('button[id="submit"]').click();
   }
 }

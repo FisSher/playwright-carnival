@@ -1,18 +1,17 @@
 import { Page } from '@playwright/test';
+import { BasePage } from './BasePage';
 
-export class ConfirmationPage {
-  page: Page;
-
+export class ConfirmationPage extends BasePage {
   constructor(page: Page) {
-    this.page = page;
+    super(page);
   }
 
   async getValues(page: Page) {
-    let splitValues: string[]; // Define a helper
+    let splitValues: string[];
     const myObject = {};
-    const values = await page.locator('tbody >> tr').allInnerTexts(); // See in debug mode what does this return us so you understand the following code
+    const values = await page.locator('tbody >> tr').allInnerTexts();
     values.forEach(element => {
-      splitValues = element.split('\t'); // This will split the values in that tab and create an array of 2 elements
+      splitValues = element.split('\t');
       myObject[splitValues[0]] = splitValues[1];
     });
     return myObject;

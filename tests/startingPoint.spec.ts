@@ -17,15 +17,10 @@ test('Fill in the form', async ({ page }) => {
   const user = new User();
 
   const formPage = new FormPage(page);
-  await formPage.goToFormPage();
-  await formPage.fillForm(user);
-  await formPage.fillBirthDay(user.dateOfBirth);
-  await formPage.selectStateAndCity(user.address.state, user.address.city);
-  await formPage.submitButton();
+  await formPage.fillAndSubmitForm(user);
 
   const resultJson = await confirmationPage.getValues(page);
   // https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
-  // Form has a comma (,) that needs to be replaces with a space.
   expect(user.dateOfBirth.toLocaleDateString('en-gb', { day: '2-digit', month: 'long', year: 'numeric' })).toEqual(
     resultJson['Date of Birth'].replace(',', ' '),
   );
