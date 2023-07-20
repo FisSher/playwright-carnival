@@ -1,12 +1,12 @@
 {
-  "name": "palomaframework",
+  "name": "playwright-carnival",
   "version": "1.0.0",
-  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "description": "",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "",
   "devDependencies": {
     "@playwright/test": "^1.35.1",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
