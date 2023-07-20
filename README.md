@@ -13,7 +13,7 @@ Clone the project
 
 run "npm install" 
 
-run npx playwright test
+run "npx playwright test"
 
 # Good to have
 VSCode playwright extension
