@@ -11,10 +11,6 @@ export class FormPage extends BasePage {
     this.formLocators = new FormLocators(page);
   }
 
-  async goToFormPage() {
-    await this.page.goto('https://demoqa.com/automation-practice-form');
-  }
-
   async fillAndSubmitForm(user: User) {
     await this.fillBasicData(user);
     await this.fillBirthDay(user.dateOfBirth);

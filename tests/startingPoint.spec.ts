@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
   PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch).then(blocker => {
     blocker.enableBlockingInPage(page);
   });
-  await page.goto('https://demoqa.com/automation-practice-form');
+  await page.goto('/automation-practice-form');
 });
 
 test('Fill in the form', async ({ page }) => {
