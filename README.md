@@ -1,5 +1,5 @@
 # playwright-carnival
-Repo that I did with coworkers while practicing playwright with typescript
+Repo that I did with coworkers while teaching them playwright with typescript. Now I will keep updating and enhancing it with my own ideas while I keep a separate one for them.
 
 # What do I need? 
 Node 20.x.x
