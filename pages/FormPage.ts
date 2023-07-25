@@ -38,6 +38,7 @@ export class FormPage extends BasePage {
     // https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
     const parsedDate = birthday.toLocaleDateString('en-gb', { day: '2-digit', month: 'short', year: 'numeric' });
     await this.formLocators.dateOfBirthInput.fill(parsedDate);
+    // Clicking outside so the date is saved
     await this.page.locator('label[id="dateOfBirth-label"]').click();
   }
 
@@ -51,16 +52,16 @@ export class FormPage extends BasePage {
   }
 
   private getHobbySelector(hobby: string): string {
+    let selector = '';
     switch (hobby) {
       case 'Sports':
-        return this.formLocators.sportsSelector;
+        selector = this.formLocators.sportsSelector;
       case 'Reading':
-        return this.formLocators.readingSelector;
+        selector = this.formLocators.readingSelector;
       case 'Music':
-        return this.formLocators.musicSelector;
-      default:
-        return '';
+        selector = this.formLocators.musicSelector;
     }
+    return selector;
   }
 
   private async selectHobby(hobbies: string[]) {

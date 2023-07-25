@@ -20,7 +20,7 @@ export class User {
     this.mobile = faker.string.numeric({ length: 10, allowLeadingZeros: false });
     this.hobbies = faker.helpers.arrayElements(['Sports', 'Reading', 'Music']);
     this.subjects = faker.helpers.arrayElements(['Maths', 'English', 'Arts', 'History'], { min: 1, max: 4 });
-    this.dateOfBirth = faker.date.between({ from: '1970-01-01T00:00:00.000Z', to: '2000-01-01T00:00:00.000Z' }); // https://fakerjs.dev/api/date.html#between
+    this.dateOfBirth = faker.date.between({ from: '1970-01-01T00:00:00.000Z', to: '2000-01-01T00:00:00.000Z' });
     this.address = new Address();
   }
 }
