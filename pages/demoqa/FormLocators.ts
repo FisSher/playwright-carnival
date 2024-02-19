@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from '../BasePage';
 
 export class FormLocators extends BasePage {
   firstNameInput: Locator = this.page.locator('input[id="firstName"]');
