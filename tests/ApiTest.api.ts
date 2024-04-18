@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import reqresUser from '../jsons/reqres/user.json';
 import { CreateUser, User } from '../models/api/Interfaces';
 
-test.describe("Inna's tests over reqres endpoints @Inna @API", () => {
+test.describe('Tests over reqres endpoints @API', () => {
   test('Get a single user @Positive', async ({ request }) => {
     const response = await request.get(`${process.env.REQRES_API}/users/2`);
     const parsedResponse = await response.json();

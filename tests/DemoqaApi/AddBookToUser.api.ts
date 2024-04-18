@@ -3,7 +3,7 @@ import { AccountAPI } from '../../models/api/demoqa/bookstore/AccountAPI';
 import { Account } from '../../models/demoqa/bookstore/Account';
 import { BookAPI } from '../../models/api/demoqa/bookstore/BookAPI';
 
-test('Add a book to a user @API @Positive', async ({}) => {
+test('Add a book to a user @API @Positive', async () => {
   const userBearerToken = await AccountAPI.getUserToken(new Account('TonyBobonie', 'Perro123!'));
   expect(userBearerToken).toBeDefined();
 

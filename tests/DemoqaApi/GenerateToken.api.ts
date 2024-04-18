@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
-test.describe("Inna's api tests over the demoqa endpoints @Inna @API", () => {
+test.describe('Tests over the demoqa endpoints  @API', () => {
   test('Generate token @positive', async ({ request }) => {
     const response = await request.post(`${process.env.API_URL}/Account/v1/GenerateToken`, {
       data: {
@@ -11,8 +11,8 @@ test.describe("Inna's api tests over the demoqa endpoints @Inna @API", () => {
     });
     expect(response.ok()).toBeTruthy();
     const parsedResponse = await response.json();
-    expect.soft(parsedResponse.token).toBeDefined;
-    expect.soft(parsedResponse.expires).toBeDefined;
+    expect.soft(parsedResponse.token).toBeDefined();
+    expect.soft(parsedResponse.expires).toBeDefined();
     expect(parsedResponse.status).toBe('Success');
     expect(parsedResponse.result).toBe('User authorized successfully.');
   });
@@ -28,7 +28,7 @@ test.describe("Inna's api tests over the demoqa endpoints @Inna @API", () => {
     const response = await request.post(`${process.env.API_URL}/Account/v1/GenerateToken`, {
       data: {
         userName: `${faker.person.fullName}`,
-        password: `${faker.person.firstName}${faker.number}!`,
+        password: `${faker.person.firstName}${faker.number.int}`,
       },
     });
     const expectedResult = {
